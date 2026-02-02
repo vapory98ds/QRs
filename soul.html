@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Pro | Xavi Sontay</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <style>
+        :root {
+            --primary: #00d2ff;
+            --accent: #3a7bd5;
+            --bg: #0f172a;
+            --card-rgba: rgba(30, 41, 59, 0.7);
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: radial-gradient(circle at top right, #1e293b, #0f172a);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            background: var(--card-rgba);
+            backdrop-filter: blur(15px);
+            padding: 35px;
+            border-radius: 24px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            width: 90%;
+            max-width: 380px;
+            text-align: center;
+        }
+
+        h2 {
+            font-weight: 800;
+            background: linear-gradient(to right, #00d2ff, #92fe9d);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 5px;
+            letter-spacing: -1px;
+        }
+
+        .subtitle { color: #94a3b8; font-size: 0.85rem; margin-bottom: 25px; }
+
+        /* Grid de Redes con Colores Pro */
+        .social-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            margin-bottom: 25px;
+        }
+
+        .social-btn {
+            background: rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 14px;
+            padding: 12px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .social-btn svg { width: 22px; height: 22px; fill: white; opacity: 0.7; }
+
+        .social-btn:hover { transform: translateY(-5px); background: rgba(255,255,255,0.1); }
+        .social-btn:hover svg { opacity: 1; }
+
+        input {
+            width: 100%;
+            padding: 14px;
+            background: rgba(0,0,0,0.2);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            color: white;
+            box-sizing: border-box;
+            outline: none;
+            font-size: 0.95rem;
+            margin-bottom: 20px;
+            transition: 0.3s;
+        }
+
+        input:focus { border-color: var(--primary); background: rgba(0,0,0,0.4); }
+
+        .gen-btn {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(45deg, var(--primary), var(--accent));
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            text-transform: uppercase;
+            box-shadow: 0 10px 20px -5px rgba(0, 210, 255, 0.3);
+            transition: 0.3s;
+        }
+
+        .gen-btn:hover { transform: scale(1.03); box-shadow: 0 15px 25px -5px rgba(0, 210, 255, 0.5); }
+
+        #qrcode {
+            background: white;
+            padding: 15px;
+            border-radius: 18px;
+            margin: 25px auto;
+            display: none;
+            width: fit-content;
+            animation: zoomIn 0.4s ease;
+        }
+
+        @keyframes zoomIn { from { transform: scale(0); } to { transform: scale(1); } }
+
+        .dl-link {
+            color: var(--primary);
+            text-decoration: none;
+            font-size: 0.85rem;
+            display: none;
+            margin-top: 10px;
+            font-weight: bold;
+            text-shadow: 0 0 10px rgba(0, 210, 255, 0.2);
+        }
+
+        .footer {
+            margin-top: 30px;
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.3);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>QR GENERATOR</h2>
+        <div class="subtitle">Desarrollado por Xavi Sontay</div>
+
+        <div class="social-grid">
+            <button class="social-btn" onclick="setApp('YouTube', 'https://youtube.com/')" title="YouTube">
+                <svg viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+            </button>
+            <button class="social-btn" onclick="setApp('Spotify', 'https://open.spotify.com/')" title="Spotify">
+                <svg viewBox="0 0 24 24"><path d="M12 0C5.371 0 0 5.371 0 12s5.371 12 12 12 12-5.371 12-12S18.629 0 12 0zm5.503 17.305c-.215.353-.674.464-1.024.25-2.848-1.741-6.433-2.134-10.655-1.168-.403.093-.811-.157-.905-.561-.093-.404.157-.811.561-.905 4.624-1.057 8.583-.604 11.773 1.346.35.214.46.674.25 1.038zm1.472-3.26c-.27.44-.848.577-1.288.307-3.26-2-8.23-2.585-12.085-1.414-.495.15-1.022-.128-1.173-.623-.15-.495.128-1.022.623-1.173 4.407-1.338 9.889-.684 13.617 1.604.44.27.577.848.306 1.29zm.126-3.413c-3.91-2.321-10.363-2.535-14.127-1.393-.6.182-1.235-.158-1.417-.758-.182-.6.158-1.235.758-1.417 4.312-1.31 11.44-1.054 15.94 1.618.54.32.718 1.018.398 1.558-.32.54-1.018.718-1.552.392z"/></svg>
+            </button>
+            <button class="social-btn" onclick="setApp('Instagram', 'https://instagram.com/')" title="Instagram">
+                <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+            </button>
+            <button class="social-btn" onclick="setApp('Web', '')" title="Link">
+                <svg viewBox="0 0 24 24"><path d="M12.65 11.293l-1.414 1.414a3.998 3.998 0 0 0 .151 5.485l3.536 3.536a4.002 4.002 0 0 0 5.656 0l1.414-1.414a4 4 0 0 0 0-5.656l-1.503-1.503a.999.999 0 1 0-1.414 1.414l1.503 1.503a2 2 0 0 1 0 2.828l-1.414 1.414a2 2 0 0 1-2.828 0l-3.536-3.536a2 2 0 0 1-.151-2.828l1.414-1.414a1 1 0 0 0-1.414-1.414zm-7.071 7.071l-1.414-1.414a4 4 0 0 1 0-5.656l1.414-1.414a4 4 0 0 1 5.656 0l1.503 1.503a1 1 0 0 0 1.414-1.414l-1.503-1.503a6.004 6.004 0 0 0-8.485 0l-1.414 1.414a6.004 6.004 0 0 0 0 8.485l1.414 1.414a1 1 0 0 0 1.414-1.414z"/></svg>
+            </button>
+        </div>
+
+        <input type="text" id="urlInput" placeholder="Pega tu enlace aquí...">
+
+        <button class="gen-btn" onclick="generateQR()">Crear QR Infinito</button>
+
+        <div id="qrcode"></div>
+        <a id="downloadBtn" class="dl-link" href="#" onclick="downloadQR()">DESCARGAR IMAGEN</a>
+    </div>
+
+    <div class="footer">
+        © 2026 XAVI SONTAY | RESERVED
+    </div>
+
+    <script>
+        function setApp(name, prefix) {
+            const input = document.getElementById('urlInput');
+            input.placeholder = "Enlace de " + name + "...";
+            input.value = prefix;
+            input.focus();
+        }
+
+        function generateQR() {
+            const url = document.getElementById('urlInput').value;
+            const container = document.getElementById('qrcode');
+            const dlBtn = document.getElementById('downloadBtn');
+
+            if (!url) return alert("Ingresa un enlace.");
+
+            container.innerHTML = "";
+            container.style.display = "block";
+            
+            new QRCode(container, {
+                text: url,
+                width: 200,
+                height: 200,
+                colorDark : "#0f172a",
+                colorLight : "#ffffff",
+                correctLevel : QRCode.CorrectLevel.H
+            });
+
+            setTimeout(() => {
+                dlBtn.style.display = "inline-block";
+            }, 350);
+        }
+
+        function downloadQR() {
+            const img = document.querySelector('#qrcode img');
+            if (img) {
+                const link = document.createElement('a');
+                link.href = img.src;
+                link.download = 'QR_XAVI_SONTAY.png';
+                link.click();
+            }
+        }
+    </script>
+</body>
+</html>
